@@ -29,11 +29,11 @@ oov_tok = "<OOV>"
     :param text: The "text" parameter is the input sentence for which you want to predict the emotion
     :return: The function `mot(text)` returns the predicted emotion label for the given input text.
     """
-d1 = pd.read_csv("/Users/hin03/streamlit_NLP_venv/dataset/archive2/train.txt",
+d1 = pd.read_csv("F:/Emotional-Detection-main/archive2/train.txt",
                        delimiter=';',names=['sentence','label'],header=None)
 frame = d1
 train_df = frame
-test_df = pd.read_csv("/Users/hin03/streamlit_NLP_venv/dataset/archive2/test.txt",
+test_df = pd.read_csv("F:/Emotional-Detection-main/archive2/test.txt",
                       delimiter=';',names=['sentence','label'],header=None)
 
 emotion = train_df.label.unique()
