@@ -33,13 +33,20 @@ class model_processing():
             tf.keras.layers.Embedding(self.vocab_size,self.embedding_dim,input_length=self.max_length),
             tf.keras.layers.GlobalAveragePooling1D(),
             tf.keras.layers.Dense(36,activation='relu'),
+            tf.keras.layers.Dense(24,activation='relu'),
+            tf.keras.layers.Dense(12,activation='relu'),
             tf.keras.layers.Dense(6,activation='sigmoid')
         ])
         self.model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy']) 
     
-    def fit_model(self,train_padded,train_label,test_padded,test_label,num_epochs=30):
+    def fit_model(self,train_padded,train_label,test_padded,test_label,num_epochs=40):
         history = self.model.fit(train_padded, train_label, epochs=num_epochs, validation_data=(test_padded,test_label), verbose=2)
         
     def predict_model(self,padded):
         return self.model.predict(padded)
-               
+    
+    def save_model(self,text):
+        self.model.save(text)
+
+    def load_model(self,model):
+        self.model = model

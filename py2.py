@@ -7,6 +7,7 @@
     :param text: The "text" parameter is the input text for which you want to predict the emotion
     :return: The code is returning the predicted emotion label for a given input text.
 """
+import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pandas as pd
@@ -66,33 +67,37 @@ test_padded = pad_sequences(test_sequence,padding='post',maxlen=max_length,
 Model_processing = model_processing(train_sentence=train_sentence,
                                     test_sentence=test_sentence)
 
-Model_processing.tokenizer_def()
+# Model_processing.tokenizer_def()
 
-train_label = []
-for i in train_df['label']:
-    tmp = np.zeros(6)
-    tmp[int(i)] = 1
-    train_label.append(tmp)
-train_label = np.array(train_label)
-test_label = []
-for i in test_df['label']:
-    try: 
-        tmp = np.zeros(6)
-        tmp[int(i)] = 1
-        test_label.append(tmp)
-    except:
-        continue
-test_label = np.array(test_label)
+# train_label = []
+# for i in train_df['label']:
+#     tmp = np.zeros(6)
+#     tmp[int(i)] = 1
+#     train_label.append(tmp)
+# train_label = np.array(train_label)
+# test_label = []
+# for i in test_df['label']:
+#     try: 
+#         tmp = np.zeros(6)
+#         tmp[int(i)] = 1
+#         test_label.append(tmp)
+#     except:
+#         continue
+# test_label = np.array(test_label)
 
-train_padded = np.array(train_padded)
-test_padded = np.array(test_padded)
-Model_processing.main_model()
-Model_processing.fit_model(train_padded=train_padded,
-                           test_padded=test_padded,
-                           train_label=train_label,
-                           test_label=test_label)
+# train_padded = np.array(train_padded)
+# test_padded = np.array(test_padded)
+# Model_processing.main_model()
+# Model_processing.fit_model(train_padded=train_padded,
+#                            test_padded=test_padded,
+#                            train_label=train_label,
+#                            test_label=test_label)
 swapped_emotion_dict = {value: key for key, value in emotion_dict.items()}
-Model_processing.save_model("model_40e_3hidden.h5")
+
+
+# Load the model from the HDF5 format
+Model_processing.load_model(tf.keras.models.load_model("model_40e_3hidden.h5"))
+
 from answer import answer
 def return_result(text):
     sentences = []

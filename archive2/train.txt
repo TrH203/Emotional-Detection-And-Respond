@@ -265,6 +265,18 @@ i would feel lucky to call any of the materials and kits on your site mine they 
 i have been for my bloods which proved the reason i was feeling so lethargic and rubbish was that i am low on iron so i have now been prescribed iron tablets;sadness
 i have my own mind and i feel like my mind is dangerous to my life;anger
 i feel like i love everyone or at least i am compassionate toward others;love
+i am happy;joy
+i am angry;anger
+i am sad;sadness
+i feel happy;joy
+i am scared;fear
+i am stress;sadness
+im happy;joy
+im angry;anger
+im sad;sadness
+i feel happy;joy
+im scared;fear
+im stress;sadness
 i feel as if i should be punished for neglecting you;sadness
 i feel like it just doesnt capture the beauty of this lovely polish;love
 i feel like i ve lost some of my main roots i feel less secure emotionally financially and socially;sadness
@@ -279,6 +291,20 @@ i am not looking forward to being beaten down to feeling like a disappointment t
 im sick of feeling crappy;sadness
 i feel like i almost convinced myself this is going to be the pattern;joy
 i also wear them when im wearing a dress that makes me feel slutty feels like those antique underwears but obviously a little bit more edgy or maybe a little bit more than a little bit;love
+i am happy;joy
+i am angry;anger
+i am angry;anger
+i am angry;anger
+i am sad;sadness
+i feel happy;joy
+i am scared;fear
+i am stress;sadness
+im happy;joy
+im angry;anger
+im sad;sadness
+i feel happy;joy
+im scared;fear
+im stress;sadness
 i feel a perverse pride in my self control that i managed to stay where i was ordered and not reach for the tempting human flesh so close before us;sadness
 i feel so impatient so easily annoyed so outraged by the blatant defiance that seems to be olivias most prominent characteristic these days;anger
 i was positively giddy when the kids left this morning after our very last official class of the year but now im feeling a little sad;sadness
@@ -540,6 +566,7 @@ i feel lonely at work im not a social bird as i usually am when i was in school;
 i love comments so feel free to post one;joy
 i feel intimidated by the great women in my family tree;fear
 i truly feel that they do a lot of positive things to help the conditions for the workers and their families kids;joy
+i am angry;anger
 i think this may be the reason i would want to fly back to uae because there i can be oblivious of these conflicts that plague me conflicts that i feel helpless resolving;sadness
 i saw the video of cena kissing maria and surprisingly i didnt feel like i hated her;sadness
 i feel like i have been rather unkind to it;anger
@@ -551,6 +578,7 @@ i feel hes being very casual with my entire future;joy
 i was still feeling strong but i missed a couple lifts;joy
 i sat on my couch for several hours feeling pretty low;sadness
 i checked on you was a long time ago i can say you were happy way back then feeling contented with everyone and everything around you;joy
+i am angry;anger
 i write him when something big has happened like a fun trip or milestone and other times i just write him to tell him how im feeling about his sweet baby snuggles or growing personality;joy
 i hate the expectation that i must need a man in my life to feel worthwhile or valued;joy
 i did feel that loving kindness allow us to think and feel how our conscious and how we interact with various things in the body and mind;love

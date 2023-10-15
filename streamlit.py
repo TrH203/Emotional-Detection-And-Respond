@@ -1,10 +1,9 @@
 import streamlit as st
-from py1 import return_result
+from py2 import return_result
 import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation
 st.title("Emotional Detection")
 
 
