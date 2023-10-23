@@ -31,7 +31,11 @@ st.sidebar.title("Final")
 if st.sidebar.button("Show"):
     mean_emotions = {}
     for emotion in tea[0].keys():
-        mean_emotion = np.mean([entry[emotion] for entry in tea])
+        mean_emotion = [entry[emotion]*id for id,entry in zip(range(1,len(tea)+1),tea)]
+        mean_emotion = np.array(mean_emotion)
+        mean_emotion = np.sum(mean_emotion / np.sum(np.arange(1,len(tea)+1)))
+        print(mean_emotion)
+        # mean_emotion = mean_emotion / sum(range(1,len(tea)))
         mean_emotions[emotion] = mean_emotion
 
 

@@ -15,7 +15,7 @@ from model_processing_1 import model_processing
 
 #This is the constant indicated in this code.
 vocab_size = 20000
-embedding_dim = 16
+embedding_dim = 100
 max_length = 300
 trunc_type='post'
 padding_type='post'
@@ -92,7 +92,7 @@ Model_processing.fit_model(train_padded=train_padded,
                            train_label=train_label,
                            test_label=test_label)
 swapped_emotion_dict = {value: key for key, value in emotion_dict.items()}
-Model_processing.save_model("model_40e_3hidden.h5")
+Model_processing.save_model("model_new.h5")
 from answer import answer
 def return_result(text):
     sentences = []

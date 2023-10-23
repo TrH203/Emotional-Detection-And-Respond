@@ -7,7 +7,7 @@ class model_processing():
         self.train_sentence = train_sentence
         self.test_sentence = test_sentence
         self.vocab_size = 20000
-        self.embedding_dim = 16
+        self.embedding_dim = 100
         self.max_length = 300
         self.trunc_type='post'
         self.padding_type='post'
