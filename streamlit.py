@@ -4,7 +4,74 @@ import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+
+import cv2
+from keras.models import load_model
+import math
+from PIL import Image
+from matplotlib.animation import FuncAnimation
+
+
 st.title("Emotional Detection")
+col1, col2, col3 = st.columns(3)
+model = load_model('model.h5')
+LABELS = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
+# Checkbox in the right column
+run = col3.checkbox('Run')
+
+# Placeholder for the image in the right column
+FRAME_WINDOW = col3.image([])
+
+# Load the cascade
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+if run:
+    camera = cv2.VideoCapture(0)  # Use 0 to indicate the built-in webcam.
+    col3_placeholder = col3.empty()
+    while run:
+        ret, frame = camera.read()
+
+        # Convert to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Detect faces
+        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+        # Loop over the face detections
+        for (x, y, w, h) in faces:
+            # Extract face ROI
+            faceROI = gray[y:y + h, x:x + w]
+
+            # Resize to be compatible with the model
+            faceROI = cv2.resize(faceROI, (48, 48))
+
+            # Scale pixel values to [0, 1]
+            faceROI = faceROI / 255.0
+
+            # Add batch dimension
+            faceROI = np.expand_dims(faceROI, axis=0)
+
+            # Add channel dimension
+            faceROI = np.expand_dims(faceROI, axis=-1)
+
+            # Make prediction on the face
+            prediction = model.predict(faceROI)
+
+            # Get the label with highest probability
+            pred_label = LABELS[np.argmax(prediction)]
+
+            # Draw a rectangle around the face
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Put predicted label near the face
+            cv2.putText(frame, pred_label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            # Put the labels under camera
+            col3_placeholder.write(pred_label)
+        # Display the resulting frame
+        cv2.imshow('Face Expression Recognition', frame)
+        FRAME_WINDOW.image(frame)
+
+else:
+    col3.write('Stopped')
 
 
 # Initialize chat history
