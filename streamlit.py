@@ -42,7 +42,7 @@ if run:
             faceROI = gray[y:y + h, x:x + w]
 
             # Resize to be compatible with the model
-            faceROI = cv2.resize(faceROI, (48, 48))
+            faceROI = cv2.resize(faceROI, (56, 56))
 
             # Scale pixel values to [0, 1]
             faceROI = faceROI / 255.0
@@ -67,7 +67,6 @@ if run:
             # Put the labels under camera
             col3_placeholder.write(pred_label)
         # Display the resulting frame
-        cv2.imshow('Face Expression Recognition', frame)
         FRAME_WINDOW.image(frame)
 
 else:
