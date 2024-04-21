@@ -12,7 +12,7 @@ import tensorflow as tf
 import os
 
 data_gen = ImageDataGenerator()
-target_size = (48,48)
+target_size = (56,56)
 batch_size = 128
 class_mode='categorical'
 train = data_gen.flow_from_directory("F:/Emotional-Detection-main/archive2/images/images/train",color_mode="grayscale",target_size = target_size, class_mode=class_mode,batch_size = batch_size)
@@ -20,7 +20,7 @@ valid = data_gen.flow_from_directory("F:/Emotional-Detection-main/archive2/image
 
 # Initialising the CNN
 model = Sequential()
-model.add(tf.keras.Input(shape=(48, 48, 1)))
+model.add(tf.keras.Input(shape=(56, 56, 1)))
 # 1 - Convolution
 model.add(Conv2D(64,(3,3), padding='same'))
 model.add(BatchNormalization())
@@ -79,7 +79,7 @@ checkpoint = ModelCheckpoint("model.h5", monitor='val_accuracy', verbose=1, save
 tensorboard = TensorBoard(log_dir='./logs', histogram_freq=1)
 
 # Callbacks list
-callbacks_list = [checkpoint,early_stopping,tensorboard]
+callbacks_list = [checkpoint,tensorboard]
 
 # Model training
 model.fit(train,
