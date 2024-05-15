@@ -143,7 +143,8 @@ if chat_box := st.chat_input("Your Sentence!"):
         response_text = tokenizer.decode_ids(s[2:])
         inputs2 = "en: " + response_text
         outputs2 = model2.generate(tokenizer2(inputs2, return_tensors="pt", padding=True).input_ids, max_length=150)
-
+        a = tokenizer2.batch_decode(outputs2, skip_special_tokens=True)
+        a = a[0][4:]
         #
         with st.chat_message("user"):
             st.markdown(chat_box)
@@ -198,7 +199,7 @@ if chat_box := st.chat_input("Your Sentence!"):
             message_placeholder = st.empty()
             full_response = ""
             # Simulate typing with a delay
-            for char in tokenizer2.batch_decode(outputs2, skip_special_tokens=True):
+            for char in a:
                 full_response += char
                 time.sleep(0.02)
                 message_placeholder.markdown(full_response + "▌")
