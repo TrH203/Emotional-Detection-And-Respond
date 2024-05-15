@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 from keras.models import load_model
-from transformers import answer_question,tokenizer,transformer
+from transformers2 import answer_question,tokenizer,transformer
 import math
 from PIL import Image
 import streamlit as st
@@ -14,8 +14,15 @@ from matplotlib.animation import FuncAnimation
 import os
 from pyecharts.charts import *
 import pyecharts.options as opts
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from streamlit_echarts import st_echarts
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+
+#
+model_name = "VietAI/envit5-translation"
+tokenizer2 = AutoTokenizer.from_pretrained(model_name)
+model2 = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+#
 st.set_page_config(page_title="streamlit")
 
 st.title("Emotional Detection")
@@ -124,14 +131,24 @@ if st.sidebar.button("Show"):
 if chat_box := st.chat_input("Your Sentence!"):
     if chat_box:
         # Add user message to chat history
+        inputs = "vi: " + chat_box
+        outputs = model2.generate(tokenizer2(inputs, return_tensors="pt", padding=True).input_ids, max_length=150)
         st.session_state.messages.append({"role": "user", "content": chat_box})
-        # Display user message in chat message container
+        assistant_response = return_result(tokenizer2.batch_decode(outputs, skip_special_tokens=True))
+        #
+        s = tokenizer2.batch_decode(outputs, skip_special_tokens=True)
+        s = s[0][4:]
+        result = answer_question(s, transformer, tokenizer)
+        s = result[0].numpy().tolist()
+        response_text = tokenizer.decode_ids(s[2:])
+        inputs2 = "en: " + response_text
+        outputs2 = model2.generate(tokenizer2(inputs2, return_tensors="pt", padding=True).input_ids, max_length=150)
+
+        #
         with st.chat_message("user"):
             st.markdown(chat_box)
 
         # Get emotional response
-        result = answer_question(chat_box, transformer, tokenizer)
-        assistant_response = return_result(chat_box)
 
         # Check joy probability
         joy_probability = 0.0
@@ -163,8 +180,7 @@ if chat_box := st.chat_input("Your Sentence!"):
             "surprise": 0.0,
             "fear": 0.0
         }
-        s = result[0].numpy().tolist()
-        response_text = tokenizer.decode_ids(s[2:])
+
         # Extract emotion probabilities from response
         for line in assistant_response.split('\n'):
             for emotion in emotional_probabilities.keys():
@@ -182,7 +198,7 @@ if chat_box := st.chat_input("Your Sentence!"):
             message_placeholder = st.empty()
             full_response = ""
             # Simulate typing with a delay
-            for char in response_text:
+            for char in tokenizer2.batch_decode(outputs2, skip_special_tokens=True):
                 full_response += char
                 time.sleep(0.02)
                 message_placeholder.markdown(full_response + "▌")
