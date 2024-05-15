@@ -1,16 +1,29 @@
 import streamlit as st
-from py2 import return_result
+from py1 import return_result
 import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-
 import cv2
 from keras.models import load_model
+from transformers2 import answer_question,tokenizer,transformer
 import math
 from PIL import Image
+import streamlit as st
 from matplotlib.animation import FuncAnimation
+import os
+from pyecharts.charts import *
+import pyecharts.options as opts
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from streamlit_echarts import st_echarts
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
+#
+model_name = "VietAI/envit5-translation"
+tokenizer2 = AutoTokenizer.from_pretrained(model_name)
+model2 = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+#
+st.set_page_config(page_title="streamlit")
 
 st.title("Emotional Detection")
 col1, col2, col3 = st.columns(3)
@@ -19,7 +32,6 @@ LABELS = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
 # Checkbox in the right column
 run = col3.checkbox('Run')
 
-# Placeholder for the image in the right column
 FRAME_WINDOW = col3.image([])
 
 # Load the cascade
@@ -85,7 +97,6 @@ form1 = st.form(key='form1')
 
 store = {}
 tea = []
-
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -96,11 +107,12 @@ for message in st.session_state.messages:
 st.sidebar.title("Final")
 if st.sidebar.button("Show"):
     mean_emotions = {}
+    merged_dict = {key: [d[key] for d in tea] for key in tea[0]}
+    print(merged_dict)
     for emotion in tea[0].keys():
         mean_emotion = [entry[emotion]*id for id,entry in zip(range(1,len(tea)+1),tea)]
         mean_emotion = np.array(mean_emotion)
         mean_emotion = np.sum(mean_emotion / np.sum(np.arange(1,len(tea)+1)))
-        print(mean_emotion)
         # mean_emotion = mean_emotion / sum(range(1,len(tea)))
         mean_emotions[emotion] = mean_emotion
 
@@ -119,13 +131,25 @@ if st.sidebar.button("Show"):
 if chat_box := st.chat_input("Your Sentence!"):
     if chat_box:
         # Add user message to chat history
+        inputs = "vi: " + chat_box
+        outputs = model2.generate(tokenizer2(inputs, return_tensors="pt", padding=True).input_ids, max_length=150)
         st.session_state.messages.append({"role": "user", "content": chat_box})
-        # Display user message in chat message container
+        assistant_response = return_result(tokenizer2.batch_decode(outputs, skip_special_tokens=True))
+        #
+        s = tokenizer2.batch_decode(outputs, skip_special_tokens=True)
+        s = s[0][4:]
+        result = answer_question(s, transformer, tokenizer)
+        s = result[0].numpy().tolist()
+        response_text = tokenizer.decode_ids(s[2:])
+        inputs2 = "en: " + response_text
+        outputs2 = model2.generate(tokenizer2(inputs2, return_tensors="pt", padding=True).input_ids, max_length=150)
+        a = tokenizer2.batch_decode(outputs2, skip_special_tokens=True)
+        a = a[0][4:]
+        #
         with st.chat_message("user"):
             st.markdown(chat_box)
 
         # Get emotional response
-        assistant_response = return_result(chat_box)
 
         # Check joy probability
         joy_probability = 0.0
@@ -163,21 +187,6 @@ if chat_box := st.chat_input("Your Sentence!"):
             for emotion in emotional_probabilities.keys():
                 if emotion in line:
                     emotional_probabilities[emotion] = float(line.split(':')[1].strip()[:-1])
-        # Determine response based on emotion probabilities
-        if joy_probability > 45:
-            response_text = "Glad to hear that!"
-        elif sadness_probability > 45:
-            response_text = "I'm here for you. Is there something you'd like to talk about?"
-        elif anger_probability > 45:
-            response_text = "I'm sorry to hear that. How can I assist you in resolving the issue?"
-        elif love_probability > 45:
-            response_text = "That's wonderful! Love is a beautiful feeling."
-        elif surprise_probability > 45:
-            response_text = "Wow! What's the story behind this surprise?"
-        elif fear_probability > 45:
-            response_text = "It's okay to feel fear sometimes. How can I help you overcome it?"
-        else:
-            response_text = "I'm here to assist you. What else would you like to know or discuss?"
         rr = return_result(chat_box)
         ans = rr.split('\n')
         result = ""
@@ -190,7 +199,7 @@ if chat_box := st.chat_input("Your Sentence!"):
             message_placeholder = st.empty()
             full_response = ""
             # Simulate typing with a delay
-            for char in response_text:
+            for char in a:
                 full_response += char
                 time.sleep(0.02)
                 message_placeholder.markdown(full_response + "▌")
