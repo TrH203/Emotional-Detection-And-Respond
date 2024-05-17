@@ -201,7 +201,7 @@ if chat_box := st.chat_input("Your Sentence!"):
             # Simulate typing with a delay
             for char in a:
                 full_response += char
-                time.sleep(0.02)
+                time.sleep(0.01)
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response, help = result)
         # Add assistant response to chat history
