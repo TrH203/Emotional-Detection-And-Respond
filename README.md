@@ -13,11 +13,10 @@ This is my small project which is used to detect emotion from a sentence. This p
 <img width="1280" alt="Screenshot 2023-10-27 at 21 55 35" src="https://github.com/TrH203/Emotional-Detection/assets/96675314/5f56f54a-67bf-4176-817c-be6c5a5a3b64">
 
 ## Example 3:
-![image](https://github.com/TrH203/Emotional-Detection/assets/96675314/9d1d674d-093a-43ac-ad04-c5f50043d6f2)
+<img width="1280" alt="Screenshot 2023-10-27 at 21 55 35" src="https://github.com/TrH203/Emotional-Detection/assets/96675314/9d1d674d-093a-43ac-ad04-c5f50043d6f2">
 
 ## Example 4:
-![image](https://github.com/TrH203/Emotional-Detection/assets/96675314/4356a787-637c-40e6-8587-c0026bf91175)
-
+<img width="1280" alt="Screenshot 2023-10-27 at 21 55 35" src="https://github.com/TrH203/Emotional-Detection/assets/96675314/4356a787-637c-40e6-8587-c0026bf91175">
 
 
 ## Install guide
