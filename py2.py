@@ -1,12 +1,3 @@
-# processing the emotion model
-#Here is the code that use to import all needed library
-"""
-    The code imports the necessary libraries, preprocesses the data, trains a model, and defines a
-    function `mot(text)` that takes a sentence as input and predicts the emotion associated with it.
-    
-    :param text: The "text" parameter is the input text for which you want to predict the emotion
-    :return: The code is returning the predicted emotion label for a given input text.
-"""
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences

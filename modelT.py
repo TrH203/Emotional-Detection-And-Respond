@@ -59,7 +59,9 @@ def answer_question(question, model, tokenizer, encoder_maxlen=250, decoder_maxl
 
     return tokenized_answer
 
-# result = answer_question("Question: Now I have anger and trust issues. How can I treat this and fix myself?", transformer, tokenizer)
-# print(result[0].numpy().tolist())
-# print("----DU DOAN----")
-# print(tokenizer.decode_ids(result[0].numpy().tolist()))
+
+if __name__ == "__main__":   
+    result = answer_question("Question: Now I have anger and trust issues. How can I treat this and fix myself?", transformer, tokenizer)
+    print(result[0].numpy().tolist())
+    print("----DU DOAN----")
+    print(tokenizer.decode_ids(result[0].numpy().tolist()))
