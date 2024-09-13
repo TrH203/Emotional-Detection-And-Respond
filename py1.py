@@ -1,12 +1,4 @@
-# processing the emotion model
-# Here is the code that use to import all needed library
-"""
-    The code imports the necessary libraries, preprocesses the data, trains a model, and defines a
-    function `mot(text)` that takes a sentence as input and predicts the emotion associated with it.
-
-    :param text: The "text" parameter is the input text for which you want to predict the emotion
-    :return: The code is returning the predicted emotion label for a given input text.
-"""
+# This file used to use and train model
 from keras.preprocessing.text import Tokenizer
 from keras.utils import pad_sequences
 import pandas as pd
@@ -22,14 +14,7 @@ trunc_type = 'post'
 padding_type = 'post'
 oov_tok = "<OOV>"
 
-# import data
-"""
-    The code provided is for training a model to classify emotions in text data and using the trained
-    model to predict the emotion of a given sentence.
 
-    :param text: The "text" parameter is the input sentence for which you want to predict the emotion
-    :return: The function `mot(text)` returns the predicted emotion label for the given input text.
-    """
 d1 = pd.read_csv("archive2/vn/train.txt", delimiter=';', names=['sentence', 'label'], header=None)
 
 train_df = d1.dropna()

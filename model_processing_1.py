@@ -40,7 +40,7 @@ class model_processing():
         self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     def fit_model(self, train_padded, train_label, test_padded, test_label, num_epochs=15):
-        history = self.model.fit(train_padded, train_label, epochs=num_epochs,
+        history = self.model.fit(train_padded, train_label, epochs=num_epochs,batch_size=64,
                                  validation_data=(test_padded, test_label), verbose=2)
 
     def predict_model(self, padded):
